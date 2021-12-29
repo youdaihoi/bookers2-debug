@@ -35,8 +35,9 @@
           </td>
           <% @book.bookcomments.each do |bookcomment| %>
             <td>
-              <%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %>
+              <%= attachment_image_tag(bookcomment.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %>
             </td>
+            <td><%= bookcomment.user.name %></td>
             <td><%= bookcomment.comment %></td>
 
             <% if bookcomment.user == current_user %>
