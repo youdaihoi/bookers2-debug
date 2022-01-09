@@ -33,30 +33,34 @@
           <td>
             コメント数：<%= @book.bookcomments.count %>
           </td>
-          <% @book.bookcomments.each do |bookcomment| %>
-            <td>
-              <%= attachment_image_tag(bookcomment.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %>
-            </td>
-            <td><%= bookcomment.user.name %></td>
-            <td><%= bookcomment.comment %></td>
 
-            <% if bookcomment.user == current_user %>
-            <td>
-              <%= link_to "削除", book_bookcomment_path(bookcomment.book, bookcomment), method: :delete %>
-            <% end %>
-          <% end %>
-          <td>
-            <%= form_with(model:[@book,@bookcomment], local: true)do |f| %>
-              <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに" %>
-              <%= f.submit"送信する" %>
-            <% end %>
-          </td>
           <% if @book.user == current_user %>
           <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
           <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
           <% end %>
         </tr>
       </table>
+      <% @book.bookcomments.each do |bookcomment| %>
+            <div>
+              <%= attachment_image_tag(bookcomment.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %><br>
+              <%= bookcomment.user.name %>
+            </div>
+            <div>
+              <%= bookcomment.comment %>
+            </div>
+
+            <% if bookcomment.user == current_user %>
+            <div>
+              <%= link_to "削除", book_bookcomment_path(bookcomment.book, bookcomment), method: :delete %>
+            </div>
+            <% end %>
+          <% end %>
+          <div>
+            <%= form_with(model:[@book,@bookcomment], local: true)do |f| %>
+              <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100" %>
+              <%= f.submit"送信する" %>
+            <% end %>
+          </div>
     </div>
   </div>
 </div>
